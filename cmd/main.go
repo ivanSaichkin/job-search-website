@@ -3,16 +3,18 @@ package main
 import (
 	"job-search/go-fiber/config"
 	"job-search/go-fiber/internal/home"
-	"log"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
 func main() {
 	config.Init()
-	dbConfig := config.NewDatabaseConfig()
-	log.Println(dbConfig)
+	config.NewDatabaseConfig()
+	logConfig := config.NewLogConfig()
+
+	log.SetLevel(log.Level(logConfig.Level))
 	app := fiber.New()
 	app.Use(recover.New())
 
